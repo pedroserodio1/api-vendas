@@ -1,10 +1,9 @@
+import 'reflect-metadata';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-
 import routes from './routes';
-
 import AppError from '@shared/errors/appError';
-import { json } from 'stream/consumers';
+import '@shared/typeorm';
 
 const app = express();
 
@@ -13,6 +12,7 @@ app.use(express.json());
 
 app.use(routes);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     if (error instanceof AppError) {
         return res.status(error.statusCode).json({
@@ -28,5 +28,6 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen('3333', () => {
+    /* eslint-disable no-console */
     console.log('Server started on port 3333! 😁');
 });
