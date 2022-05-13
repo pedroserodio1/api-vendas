@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import ProductsController from '../controller/ProductsController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import isAuthenticate from '@shared/http/middlewares/isAuthenticate';
 
 const productsRouter = Router();
 const productsController = new ProductsController();
@@ -26,6 +27,7 @@ productsRouter.post(
             quantity: Joi.number().required(),
         },
     }),
+    isAuthenticate,
     productsController.create,
 );
 
@@ -41,6 +43,7 @@ productsRouter.put(
             id: Joi.string().uuid().required(),
         },
     }),
+    isAuthenticate,
     productsController.update,
 );
 
@@ -51,6 +54,7 @@ productsRouter.delete(
             id: Joi.string().uuid().required(),
         },
     }),
+    isAuthenticate,
     productsController.delete,
 );
 

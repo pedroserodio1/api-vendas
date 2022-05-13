@@ -6,14 +6,18 @@ import { errors } from 'celebrate';
 import routes from './routes';
 import AppError from '@shared/errors/appError';
 import '@shared/typeorm';
+import uploadConfig from '@config/upload';
+import swaggerFile from '@config/swagger.json';
+import swagger from 'swagger-ui-express';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use(routes);
-
+app.use('/api/v1/files', express.static(uploadConfig.directory));
+app.use('/api/v1', routes);
+app.use('/api-docs', swagger.serve, swagger.setup(swaggerFile));
 app.use(errors());
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

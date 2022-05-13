@@ -1,0 +1,185 @@
+{
+    "openapi": "3.0.0",
+	"info": {
+		"title": "Ecommerce Documentation",
+		"description": "This is an API for ecommerce",
+		"version": "1.0",
+		"contact": {
+			"email": "serodiomg@gmail.com"
+		}
+	},
+    "servers": [
+        {
+            "url": "http://localhost:3333/api/v1",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products",
+                "description": "Route to list all products registered in the API database",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                },
+                                "example":[{
+                                    "id": "06f98cef-1fc1-4abf-aef0-f97e1ac49c52",
+                                    "name": "book 1000",
+                                    "price": "25.00",
+                                    "quantity": 2,
+                                    "created_at": "2022-04-06T13:58:42.928Z",
+                                    "updated_at": "2022-04-06T13:58:42.928Z"
+                                },
+                                {
+                                    "id": "18ea4829-b598-4f84-bd76-308f7a7f219e",
+                                    "name": "book",
+                                    "price": "25.00",
+                                    "quantity": 2,
+                                    "created_at": "2022-04-06T13:59:06.805Z",
+                                    "updated_at": "2022-04-06T14:00:10.374Z"
+                                },
+                                {
+                                    "id": "0b4856c5-ffda-498c-b50f-88c7cbc1ee0e",
+                                    "name": "one piece 100",
+                                    "price": "32.90",
+                                    "quantity": 187,
+                                    "created_at": "2022-05-04T16:41:41.302Z",
+                                    "updated_at": "2022-05-04T16:41:41.302Z"
+                                }]
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "No products found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "code":{
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example":{
+                                    "status": "error",
+                                    "code": 404,
+                                    "message": "No products found"
+                                }
+                            }
+                        }
+                    }
+            }
+        },
+            "post":{
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a new product",
+                "description": "Create a new product",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "name":{
+                                        "type": "string"
+                                    },
+                                    "price":{
+                                        "type": "number"
+                                    },
+                                    "quantity":{
+                                        "type": "number"
+                                    }
+                                },
+                                "example":{
+                                    "name": "book",
+                                    "price": "25.00",
+                                    "quantity": 2
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                },
+                                "example":{
+                                    "id": "06f98cef-1fc1-4abf-aef0-f97e1ac49c52",
+                                    "name": "book 1000",
+                                    "price": "25.00",
+                                    "quantity": 2,
+                                    "created_at": "2022-04-06T13:58:42.928Z",
+                                    "updated_at": "2022-04-06T13:58:42.928Z"
+                                }
+                            }
+                        }
+                    }
+            }
+
+        }
+    }
+        
+    },
+    "components": {
+        "schemas": {
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+            }
+        }
+    },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+            }
+        }
+    
+    }
+    
+}
